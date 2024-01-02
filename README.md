@@ -13,6 +13,8 @@ Furthermore, using sentiment analysis, the message bubbles are colorized to comm
 - Down the road it would be cool to also add a text-to-speech option, so that all text messages get converted to speech, with the generated voice being that of the message sender;
     - this can already be done with a very small amount of sample data (like elevenlabs), but the privacy concerns are too involved to exercise this idea so quick. but would be cool to figure out a way that, as long as all parties involved in the chat consent to it, their voices are used to train and later use for their text messages.
 
+I'm using Matrix protocol due to it being an off-the-shelf, reliable, pretty mature E2EE messaging protocol that I can build a frontend around, instead of building my own.
+
 This is a PoC I'm working on to satisfy my curiosity about whether voice notes can be better integrated into the messenger app communications flow, and is not intended to be a final product of any kind.
 
 ### Current game plan:
