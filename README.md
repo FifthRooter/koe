@@ -18,9 +18,9 @@ I'm using Matrix protocol due to it being an off-the-shelf, reliable, pretty mat
 This is a PoC I'm working on to satisfy my curiosity about whether voice notes can be better integrated into the messenger app communications flow, and is not intended to be a final product of any kind.
 
 ### Current game plan:
-1. Set up a basic local Matrix environment (using Synapse)
+1. ~~Set up a basic local Matrix environment (using Synapse)~~
 2. Integrate Matrix client SDK
-3. Create minimal chat interface
+3. ~~Create minimal chat interface~~
 4. Implement voice recording functionality
 5. Integrate speech-to-text API for transcription (Web Speech API, Whisper API, dunno yet)
 6. Implement sentiment analysis (again, one of the several)
