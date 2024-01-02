@@ -48,4 +48,5 @@ This is a PoC I'm working on to satisfy my curiosity about whether voice notes c
 
 ### Current progress:
 Set up a skeleton SvelteKit project and created a simple chat interface to post messages. Next up, creating two separate chat windows on the same page, log them in with different accounts, and chat between the two accounts locally first, then through my VPS. Afterwards will integrate voice recording and playback.
-![image](https://github.com/FifthRooter/koe/assets/22204845/4c2436ce-fc10-43a8-9df6-48662bb7942f)
+It ain't much, but it's honest work.
+![it ain't much, but it's honest work](https://github.com/FifthRooter/koe/assets/22204845/4c2436ce-fc10-43a8-9df6-48662bb7942f)
