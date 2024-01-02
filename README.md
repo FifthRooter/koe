@@ -16,20 +16,20 @@ Furthermore, using sentiment analysis, the message bubbles are colorized to comm
 This is a PoC I'm working on to satisfy my curiosity about whether voice notes can be better integrated into the messenger app communications flow, and is not intended to be a final product of any kind.
 
 ### Current game plan:
-	1. Set up a basic local Matrix environment (using Synapse)
-	2. Integrate Matrix client SDK
-	3. Create minimal chat interface
-	4. Implement voice recording functionality
-	5. Integrate speech-to-text API for transcription (Web Speech API, Whisper API, dunno yet)
-	6. Implement sentiment analysis (again, one of the several)
-	7. Develop color-coded emotion visualization
-	8. Incorporate audio visualization library
-	9. Create interactive playback dashboard
-	10. Implement threaded conversations feature
-	11. Prototype testing
-	12. Prepare a demo setup
-	13. Let people shit on the idea
-	14. Try to refine the prototype based on feedback
-	15. Slowly lose hope
-	16. Hope lost, queue despair
-	17. Move on to the next shitty idea
+1. Set up a basic local Matrix environment (using Synapse)
+2. Integrate Matrix client SDK
+3. Create minimal chat interface
+4. Implement voice recording functionality
+5. Integrate speech-to-text API for transcription (Web Speech API, Whisper API, dunno yet)
+6. Implement sentiment analysis (again, one of the several)
+7. Develop color-coded emotion visualization
+8. Incorporate audio visualization library
+9. Create interactive playback dashboard
+10. Implement threaded conversations feature
+11. Prototype testing
+12. Prepare a demo setup
+13. Let people shit on the idea
+14. Try to refine the prototype based on feedback
+15. Slowly lose hope
+16. Hope lost, queue despair
+17. Move on to the next shitty idea

@@ -1,3 +1,9 @@
 node_modules/
 .env
 .venv/
+homeserver.log
+homeserver.pid
+koe-matrix.log.config
+koe-matrix.signing.key
+homeserver.yaml
+media_store/
