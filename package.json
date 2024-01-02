@@ -1,0 +1,14 @@
+{
+  "name": "koe",
+  "version": "1.0.0",
+  "description": "Voice-first messenger app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arbestor Dinggleback",
+  "license": "ISC",
+  "dependencies": {
+    "matrix-js-sdk": "^30.3.0"
+  }
+}
