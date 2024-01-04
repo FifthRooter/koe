@@ -47,5 +47,8 @@ This is a PoC I'm working on to satisfy my curiosity about whether voice notes c
 17. Move on to the next idea
 
 ### Current progress:
+![Screenshot from 2024-01-04 11-53-48](https://github.com/FifthRooter/koe/assets/22204845/ccaf1efc-3dc1-4de3-b4ee-64960d1d9130)
+![Screenshot from 2024-01-04 12-02-15](https://github.com/FifthRooter/koe/assets/22204845/c366d105-0f56-4883-8593-27ff449c1500)
+
 
 
