@@ -29,7 +29,7 @@ This is a PoC I'm working on to satisfy my curiosity about whether voice notes c
 
 ### Current game plan:
 1. ~~Set up a basic local Matrix environment (using Synapse homeserver)~~
-2. Integrate Matrix client SDK
+2. ~~Integrate Matrix client SDK w/ user authentication and session persistence~~
 3. ~~Create minimal chat interface~~
 4. Implement voice recording functionality
 5. Integrate speech-to-text API for transcription
@@ -47,6 +47,5 @@ This is a PoC I'm working on to satisfy my curiosity about whether voice notes c
 17. Move on to the next idea
 
 ### Current progress:
-Set up a skeleton SvelteKit project and created a simple chat interface to post messages. Next up, creating two separate chat windows on the same page, log them in with different accounts, and chat between the two accounts locally first, then through my VPS. Afterwards will integrate voice recording and playback.
-It ain't much, but it's honest work.
-![it ain't much, but it's honest work](https://github.com/FifthRooter/koe/assets/22204845/4c2436ce-fc10-43a8-9df6-48662bb7942f)
+
+

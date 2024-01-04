@@ -5,7 +5,6 @@
     function sendMessage() {
         if (newMessage.trim()) {
             messages = [...messages, newMessage]
-            console.log(newMessage)
             newMessage = ''
         }   
     }
@@ -53,17 +52,18 @@
         background-color: #504d4d;
         border-radius: 4px;
         color: #ddd;
+        outline: none;
     }
     .input-area button {
         padding: 8px 15px;
-        background-color: #4a76a8;
+        background-color: #920404;
         color: white;
         border: none;
         border-radius: 4px;
         cursor: pointer;
     }
     .input-area button:hover {
-        background-color: #3a5a78;
+        background-color: #7a0404;
     }
 </style>
 
