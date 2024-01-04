@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import {createClient} from 'matrix-js-sdk'
+    import matrixClientStore from './stores/matrixClientStore'
     import {goto} from '$app/navigation'
 
     let userId = ''
@@ -13,23 +13,13 @@
         const session = localStorage.getItem('matrix_auth_session')
         if (session) {
             const { userId, accessToken, homeServer } = JSON.parse(session)
-            initializeClient(userId, homeServer, accessToken)
+            matrixClientStore.initialize(userId, homeServer, accessToken)
         }
     })
 
-    async function initializeClient(userId, homeServer, accessToken) {
-        client = createClient({
-            baseUrl: homeServer,
-            accessToken: accessToken,
-            userId: userId
-        })
-        isLoggedIn = true
-        // redirect to chat page
-    }
-
     async function loginUser() {
         const homeServer = 'http://localhost:8008'
-        client = createClient({baseUrl: homeServer})
+        matrixClientStore.initialize({baseUrl: homeServer})
 
         try {
             const response = await client.loginWithPassword(userId, password)
@@ -44,8 +34,6 @@
             console.error('Failed to log in', err)
             loginError = err.message
         }
-
-        
     }
 
     function logoutUser() {
@@ -55,6 +43,7 @@
         userId = ''
         password = ''
         // redirect to login page or show the login interface
+        matrixClientStore.clear()
     }
 </script>
 
