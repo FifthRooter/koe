@@ -9,7 +9,7 @@ node_modules
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .venv/
-homeserver.log
+homeserver.log*
 homeserver.pid
 koe-matrix.log.config
 koe-matrix.signing.key
