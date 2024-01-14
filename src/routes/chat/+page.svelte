@@ -46,6 +46,25 @@
         const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg'})
         // save audioblob or send to server
         audioChunks = []
+        const audioFile = new File([audioBlob], 'voice-message.mp3', { type: 'audio/mpeg', lastModified: new Date().getTime() })
+
+        if (matrixClient) {
+            matrixClient.uploadContent(audioFile).then((res) => {
+                const contentUri = res.content_uri
+
+                const messageContent = {
+                    body: 'voice-message.mp3',
+                    msgtype: 'm.audio',
+                    url: contentUri
+                }
+
+                matrixClient.sendMessage(/* roomId */, messageContent).then((res) => {
+                    console.log('Message sent', res)
+                }).catch((err) => {
+                    console.error('Failed to send message', err)
+                }
+            })
+        }
         // TODO: Implement sending the audio blob as a message in your chat application
         console.log("Recording stopped. Blob created:", audioBlob);
     }   

@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import matrixClientStore from './stores/matrixClientStore'
+    import matrixClientStore from '../stores/matrixClientStore'
     import {goto} from '$app/navigation'
 
     let userId = ''
@@ -12,27 +12,35 @@
     onMount(() => {
         const session = localStorage.getItem('matrix_auth_session')
         if (session) {
-            const { userId, accessToken, homeServer } = JSON.parse(session)
-            matrixClientStore.initialize(userId, homeServer, accessToken)
+            const { homeServer, accessToken, userId } = JSON.parse(session)
+            matrixClientStore.initialize(homeServer, accessToken, userId)
         }
     })
 
     async function loginUser() {
         const homeServer = 'http://localhost:8008'
-        matrixClientStore.initialize({baseUrl: homeServer})
+        matrixClientStore.initialize({baseUrl: homeServer, accessToken: "", userId: ""})
+        
+        let matrixClient
+        const unsubscribe = matrixClientStore.subscribe(value => {
+            matrixClient = value
+        })
 
         try {
-            const response = await client.loginWithPassword(userId, password)
+            const response = await matrixClient.loginWithPassword(userId, password)
+            matrixClientStore.initialize(homeServer, response.access_token, response.user_id)
+            
             localStorage.setItem('matrix_auth_session', JSON.stringify({
                 userId: response.user_id,
                 accessToken: response.access_token,
                 homeServer: homeServer
             }))
-            await initializeClient(response.user_id, homeServer, response.access_token)
             goto('/chat')
         } catch (err) {
             console.error('Failed to log in', err)
             loginError = err.message
+        } finally {
+            unsubscribe()
         }
     }
 

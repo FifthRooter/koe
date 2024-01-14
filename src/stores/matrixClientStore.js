@@ -3,7 +3,7 @@ import {createClient} from 'matrix-js-sdk'
 
 function createMatrixClient(baseUrl, accessToken, userId) {
     return createClient({
-        baseUrl: homeServer,
+        baseUrl: baseUrl,
         accessToken: accessToken,
         userId: userId
     })
@@ -11,7 +11,7 @@ function createMatrixClient(baseUrl, accessToken, userId) {
 
 const matrixClient = writable(null)
 
-const initialize = (baseUrl, accessToken, userId) => {
+const initialize = ({baseUrl, accessToken, userId}) => {
     const client = createMatrixClient(baseUrl, accessToken, userId)
     matrixClient.set(client)
 }
