@@ -1,6 +1,8 @@
 <script>
     import matrixClientStore from '../../stores/matrixClientStore'
 
+    const hardcodedRoomId = '!WykLVsTBkyIISnsHmj:koe-matrix'
+
     let messages = []
     let newMessage = ''
     let isRecording = false
@@ -10,16 +12,24 @@
     let matrixClient
     matrixClientStore.subscribe(value => {
         matrixClient = value
+        console.log("Matrix client initialized:", matrixClient);
     })
 
     function sendMessage() {
         if (newMessage.trim() && matrixClient) {
             messages = [...messages, newMessage]
-            matrixClient.sendMessage(newMessage)
+            matrixClient.sendMessage(hardcodedRoomId, {
+                body: newMessage,
+                msgtype: 'm.text'
+            }).then((res) => {
+                console.log('Message sent', res)
+            }).catch((err) => {
+                console.error('Failed to send message', err)
+            })
             newMessage = ''
-        }   
         // This is where I left things, gotta figure out what matrixClient is
-    }
+    }}
+    
 
     function startRecording() {
         if (!isRecording) {
@@ -58,11 +68,11 @@
                     url: contentUri
                 }
 
-                matrixClient.sendMessage(/* roomId */, messageContent).then((res) => {
+                matrixClient.sendMessage(hardcodedRoomId, messageContent).then((res) => {
                     console.log('Message sent', res)
                 }).catch((err) => {
                     console.error('Failed to send message', err)
-                }
+                })
             })
         }
         // TODO: Implement sending the audio blob as a message in your chat application

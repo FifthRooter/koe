@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import matrixClientStore from '../stores/matrixClientStore'
     import {goto} from '$app/navigation'
+    import { createClient } from 'matrix-js-sdk'
 
     let userId = ''
     let password = ''
@@ -19,16 +20,19 @@
 
     async function loginUser() {
         const homeServer = 'http://localhost:8008'
-        matrixClientStore.initialize({baseUrl: homeServer, accessToken: "", userId: ""})
+        let tempMatrixClient = createClient({baseUrl: homeServer})
+
+        // matrixClientStore.initialize({baseUrl: homeServer, accessToken: "", userId: ""})
         
         let matrixClient
         const unsubscribe = matrixClientStore.subscribe(value => {
             matrixClient = value
         })
+        unsubscribe()
 
         try {
-            const response = await matrixClient.loginWithPassword(userId, password)
-            matrixClientStore.initialize(homeServer, response.access_token, response.user_id)
+            const response = await tempMatrixClient.loginWithPassword(userId, password)
+            matrixClientStore.initialize({baseUrl: homeServer, accessToken: response.access_token, userId: response.user_id})
             
             localStorage.setItem('matrix_auth_session', JSON.stringify({
                 userId: response.user_id,
