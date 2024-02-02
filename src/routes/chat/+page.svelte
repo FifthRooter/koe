@@ -17,7 +17,12 @@
 
     function sendMessage() {
         if (newMessage.trim() && matrixClient) {
-            messages = [...messages, newMessage]
+            const messageObject = {content: {
+                body: newMessage,
+                msgtype: 'm.text'
+            
+            }}
+            messages = [...messages, messageObject]
             matrixClient.sendMessage(hardcodedRoomId, {
                 body: newMessage,
                 msgtype: 'm.text'
@@ -63,10 +68,12 @@
                 const contentUri = res.content_uri
 
                 const messageContent = {
-                    body: 'voice-message.mp3',
+                    body: 'voice message',
                     msgtype: 'm.audio',
                     url: contentUri
                 }
+
+                messages = [...messages, {content: messageContent}]
 
                 matrixClient.sendMessage(hardcodedRoomId, messageContent).then((res) => {
                     console.log('Message sent', res)
@@ -75,15 +82,29 @@
                 })
             })
         }
-        // TODO: Implement sending the audio blob as a message in your chat application
         console.log("Recording stopped. Blob created:", audioBlob);
-    }   
+    }  
+    
+    function mxcUrlToHttpUrl(mxcUrl) {
+        if (!matrixClient) return ''
+        console.log('hello')
+        console.log('mxcUrl', mxcUrl)
+        const httpUrl = mxcUrl.replace('mxc://', 'http://localhost:8008/_matrix/media/r0/download/')
+        return httpUrl
+    }
+
 </script>
 
 <div class='chat-container'>
     <div class='messages'>
         {#each messages as message}
-            <div class='message'>{message}</div>
+            <div class='message'>
+                {#if message.content.msgtype === 'm.text'}
+                    {message.content.body}
+                {:else if message.content.msgtype === 'm.audio'}
+                    <audio controls src={mxcUrlToHttpUrl(message.content.url)}></audio>
+                {/if}
+            </div>
         {/each}
     </div>
     <div class='input-area'>
@@ -93,7 +114,7 @@
             on:keyup={event => { if (event.key === 'Enter') sendMessage();}}
         />
         <button on:click={sendMessage}>Send</button>
-        <button class='record' on:click={startRecording}>{isRecording ? '🛑' : '🎙'}</button>
+        <button class='record' on:click={startRecording}>{isRecording ? '🛑' : '🎙️'}</button>
     </div>
 </div>
 
