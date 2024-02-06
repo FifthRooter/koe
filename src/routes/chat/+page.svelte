@@ -1,5 +1,6 @@
 <script>
     import matrixClientStore from '../../stores/matrixClientStore'
+    import AudioPlayer from '../../lib/components/AudioPlayer.svelte';
 
     const hardcodedRoomId = '!WykLVsTBkyIISnsHmj:koe-matrix'
 
@@ -32,7 +33,6 @@
                 console.error('Failed to send message', err)
             })
             newMessage = ''
-        // This is where I left things, gotta figure out what matrixClient is
     }}
     
 
@@ -59,7 +59,6 @@
 
     function handleRecordingStop() {
         const audioBlob = new Blob(audioChunks, { type: 'audio/mpeg'})
-        // save audioblob or send to server
         audioChunks = []
         const audioFile = new File([audioBlob], 'voice-message.mp3', { type: 'audio/mpeg', lastModified: new Date().getTime() })
 
@@ -87,8 +86,6 @@
     
     function mxcUrlToHttpUrl(mxcUrl) {
         if (!matrixClient) return ''
-        console.log('hello')
-        console.log('mxcUrl', mxcUrl)
         const httpUrl = mxcUrl.replace('mxc://', 'http://localhost:8008/_matrix/media/r0/download/')
         return httpUrl
     }
@@ -97,12 +94,12 @@
 
 <div class='chat-container'>
     <div class='messages'>
-        {#each messages as message}
-            <div class='message'>
+        {#each messages as message, i}
+            <div class:message={true} class:sender={i % 2 === 0} class:receiver={i % 2 !== 0}>
                 {#if message.content.msgtype === 'm.text'}
                     {message.content.body}
                 {:else if message.content.msgtype === 'm.audio'}
-                    <audio controls src={mxcUrlToHttpUrl(message.content.url)}></audio>
+                    <AudioPlayer src={mxcUrlToHttpUrl(message.content.url)} bind:isPlaying={message.isPlaying} bind:playbackTime={message.playbackTime} bind:duration={message.duration}></AudioPlayer>
                 {/if}
             </div>
         {/each}
@@ -114,7 +111,7 @@
             on:keyup={event => { if (event.key === 'Enter') sendMessage();}}
         />
         <button on:click={sendMessage}>Send</button>
-        <button class='record' on:click={startRecording}>{isRecording ? '🛑' : '🎙️'}</button>
+        <button class='record' on:click={startRecording}>{isRecording ? '⏹️' : '⏺️'}</button>
     </div>
 </div>
 
@@ -130,19 +127,31 @@
         overflow: hidden;
     }
     .messages {
+        display: flex;
+        flex-direction: column;
         flex-grow: 1;
         padding: 10px;
         overflow-y: auto;
         background-color: #2a2a2a;
     }
     .message {
+        display: inline-block;
+        box-sizing: border-box;
+        font-family: 'Arial', sans-serif;
         margin-bottom: 10px;
-        padding: 8px;
-        background-color: #1a1a1a;
+        padding: 12px;
         border-top: 1px solid #333;
         color: #fff;
         border-radius: 15px;
-        max-width: 70%;
+        height: auto;
+    }
+    .sender {
+        align-self: flex-end;
+        background-color: #801414;
+    }
+    .receiver {
+        align-self: flex-start;
+        background-color: #06424d;
     }
     .input-area {
         display: flex;
@@ -151,7 +160,7 @@
         color: #ddd;
         border: 1px solid #444;
         border-top: 1px solid #ccc;
-        align-items: center; /* Aligns items vertically centered */
+        align-items: center;
         min-height: 50px;
     }
     .input-area input {
