@@ -31,24 +31,26 @@ This is a PoC I'm working on to satisfy my curiosity about whether voice notes c
 1. ~~Set up a basic local Matrix environment (using Synapse homeserver)~~
 2. ~~Integrate Matrix client SDK w/ user authentication and session persistence~~
 3. ~~Create minimal chat interface~~
-4. Implement voice recording functionality
-5. Integrate speech-to-text API for transcription
-6. Implement sentiment analysis
-7. Develop color-coded emotion visualization
-8. Incorporate audio visualization library
-9. Create interactive playback dashboard
-10. Implement threaded conversations feature
-11. Prototype testing
-12. Prepare a demo setup
-13. Let people shit on the idea
-14. Try to refine the prototype based on feedback
-15. Slowly lose hope
-16. Hope lost, queue despair
-17. Move on to the next idea
+4. ~~Implement voice recording functionality~~
+5. Integrate wavesurfer waveform visualization for voice recordings
+6. Integrate speech-to-text API for transcription
+7. Implement sentiment analysis
+8. Develop color-coded emotion visualization
+9. Incorporate audio visualization library
+10. Create interactive playback dashboard
+11. Implement threaded conversations feature
+12. Prototype testing
+13. Prepare a demo setup
+14. Let people shit on the idea
+15. Try to refine the prototype based on feedback
+16. Slowly lose hope
+17. Hope lost, queue despair
+18. Move on to the next idea
 
 ### Current progress:
 ![Screenshot from 2024-01-04 11-53-48](https://github.com/FifthRooter/koe/assets/22204845/ccaf1efc-3dc1-4de3-b4ee-64960d1d9130)
-![Screenshot from 2024-01-04 12-02-15](https://github.com/FifthRooter/koe/assets/22204845/c366d105-0f56-4883-8593-27ff449c1500)
+
+![Screenshot from 2024-02-09 19-44-16](https://github.com/FifthRooter/koe/assets/22204845/3eee6ca3-eede-47c3-b054-4b1ad3b81cf5)
 
 
 
