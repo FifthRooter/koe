@@ -1,7 +1,8 @@
 <script>
     import { onMount } from "svelte";
-    import {createClient} from 'matrix-js-sdk'
+    import matrixClientStore from '../stores/matrixClientStore'
     import {goto} from '$app/navigation'
+    import { createClient } from 'matrix-js-sdk'
 
     let userId = ''
     let password = ''
@@ -12,40 +13,39 @@
     onMount(() => {
         const session = localStorage.getItem('matrix_auth_session')
         if (session) {
-            const { userId, accessToken, homeServer } = JSON.parse(session)
-            initializeClient(userId, homeServer, accessToken)
+            const { homeServer, accessToken, userId } = JSON.parse(session)
+            matrixClientStore.initialize(homeServer, accessToken, userId)
         }
     })
 
-    async function initializeClient(userId, homeServer, accessToken) {
-        client = createClient({
-            baseUrl: homeServer,
-            accessToken: accessToken,
-            userId: userId
-        })
-        isLoggedIn = true
-        // redirect to chat page
-    }
-
     async function loginUser() {
         const homeServer = 'http://localhost:8008'
-        client = createClient({baseUrl: homeServer})
+        let tempMatrixClient = createClient({baseUrl: homeServer})
+
+        // matrixClientStore.initialize({baseUrl: homeServer, accessToken: "", userId: ""})
+        
+        let matrixClient
+        const unsubscribe = matrixClientStore.subscribe(value => {
+            matrixClient = value
+        })
+        unsubscribe()
 
         try {
-            const response = await client.loginWithPassword(userId, password)
+            const response = await tempMatrixClient.loginWithPassword(userId, password)
+            matrixClientStore.initialize({baseUrl: homeServer, accessToken: response.access_token, userId: response.user_id})
+            
             localStorage.setItem('matrix_auth_session', JSON.stringify({
                 userId: response.user_id,
                 accessToken: response.access_token,
                 homeServer: homeServer
             }))
-            await initializeClient(response.user_id, homeServer, response.access_token)
             goto('/chat')
         } catch (err) {
             console.error('Failed to log in', err)
             loginError = err.message
+        } finally {
+            unsubscribe()
         }
-
-        
     }
 
     function logoutUser() {
@@ -55,6 +55,7 @@
         userId = ''
         password = ''
         // redirect to login page or show the login interface
+        matrixClientStore.clear()
     }
 </script>
 
