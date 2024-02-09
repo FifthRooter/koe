@@ -1,5 +1,7 @@
 <script>
     import { onMount } from 'svelte'
+    import pauseIcon from '$lib/img/pause.png'
+    import playIcon from '$lib/img/play.png'
 
     let audio
 
@@ -15,7 +17,7 @@
             isPlaying = true
         }
         else {
-            audio.paused()
+            audio.pause()
             isPlaying = false
         }
     }
@@ -26,6 +28,7 @@
 
     function handleLoadedMetadata() {
         duration = audio.duration
+        console.log('duration: ', duration)
     }
 
     function handleSeek(event) {
@@ -50,30 +53,43 @@
 </script>
 
 <div class='audio-message'>
-    <audio bind:this={audio} {src} on:timeupdate={handleTimeUpdate} on:loadedmetadata={handleLoadedMetadata} on:ended={handleAudioEnded}>
+    <audio bind:this={audio} {src} preload="auto" on:timeupdate={handleTimeUpdate} on:loadedmetadata={handleLoadedMetadata} on:ended={handleAudioEnded}>
         Your browser does not support the audio element.
     </audio>
     <div class='audio-controls'>
         <button on:click={togglePlay}>
-            {isPlaying ? 'Pause' : 'Play'}
+            <img src={isPlaying ? pauseIcon : playIcon} alt={isPlaying ? 'Pause' : 'Play'}/>
         </button>
+        <div class='player-time'>
+            <p>{formatTime(playbackTime)} {formatTime(duration)}</p>
+            </div>
         <input type='range' min='0' max={duration} step='any' bind:value={playbackTime} on:input={handleSeek}/>
-        <span>{formatTime(playbackTime)} / {formatTime(duration)}</span>
     </div>
 
 </div>
 
 <style>
+    .player-time {
+        color: black;
+        font-size: x-small;
+        align-items: center;
+        margin: 0;
+        width: 38px;
+    }
+    .player-time p {
+        margin: 0;
+        text-align: center;
+    }
+    
     .audio-message {
-        display: flex;
+        display: flex-end;
         flex-direction: column;
         align-items: center;
-        margin-bottom: 10px;
-        padding: 12px;
-        background-color: #1a1a1a;
+        padding: 8px;
+        background-color: transparent;
         border-radius: 15px;
         align-self: flex-end;
-        max-width: 70%;
+        max-width: 100%;
         box-sizing: border-box;
     }
 
@@ -81,23 +97,32 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        width: 100%;
+        padding: 0 1px 0 1px;
     }
 
     .audio-controls button {
-        background-color: #920404;
+        background-color: transparent;
         border: none;
-        color: #fff;
+        color: black;
         border-radius: 4px;
-        padding: 8px 16px;
-        margin-right: 10px;
+        padding: 0 0 0 4px;
+        margin: 0 0px 0 0;
+        flex: none;
         cursor: pointer;
     }
 
+    .audio-controls button>img {
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+    }
     .audio-controls input[type='range'] {
         -webkit-appearance: none;
+        flex-grow: 1;
         appearance: none;
-        width: 100%;
-        margin: 0 10px;
+        width: 70%;
+        margin: 0;
         background: transparent;
     }
 
@@ -109,27 +134,28 @@
         background-color: #920404;
         border-radius: 50%;
         border-color: transparent;
+        border: none;
+        cursor: pointer;
     }
 
     .audio-controls input[type='range']::-webkit-slider-runnable-track {
         width: 100%;
         height: 4px;
-        background-color: #ccc;
+        background-color: black;
     }
-
     .audio-controls input[type='range']::-moz-range-thumb {
         width: 10px;
         height: 10px;
-        background-color: #920404;
+        background-color: black;
         border-radius: 50%;
         border-color: transparent;
-
+        cursor: pointer;
     }
 
     .audio-controls input[type='range']::-moz-range-track {
         width: 100%;
         height: 4px;
-        background-color: #ccc;
+        background-color: rgba(0, 0, 0, 0.541);
     }
 
     @media (max-width: 600px) {
@@ -140,4 +166,5 @@
             flex-direction: column;
         }
     }
+
 </style>

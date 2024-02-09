@@ -1,6 +1,10 @@
 <script>
     import matrixClientStore from '../../stores/matrixClientStore'
     import AudioPlayer from '../../lib/components/AudioPlayer.svelte';
+    import stopIcon from '$lib/img/stop.png'
+    import recordIcon from '$lib/img/record.png'
+    import sendIcon from '$lib/img/message.png'
+
 
     const hardcodedRoomId = '!WykLVsTBkyIISnsHmj:koe-matrix'
 
@@ -95,7 +99,7 @@
 <div class='chat-container'>
     <div class='messages'>
         {#each messages as message, i}
-            <div class:message={true} class:sender={i % 2 === 0} class:receiver={i % 2 !== 0}>
+            <div class:message={true} class:audio={message.content.msgtype === 'm.audio'} class:sender={i % 2 === 0} class:receiver={i % 2 !== 0}>
                 {#if message.content.msgtype === 'm.text'}
                     {message.content.body}
                 {:else if message.content.msgtype === 'm.audio'}
@@ -110,8 +114,12 @@
             bind:value={newMessage}
             on:keyup={event => { if (event.key === 'Enter') sendMessage();}}
         />
-        <button on:click={sendMessage}>Send</button>
-        <button class='record' on:click={startRecording}>{isRecording ? '⏹️' : '⏺️'}</button>
+        <button class='button send' on:click={sendMessage}>
+            <img src={sendIcon} alt="Send" />
+        </button>
+        <button class='button record' on:click={startRecording}>
+            <img src={isRecording ? stopIcon : recordIcon} alt={isRecording ? "Stop" : "Record"} />
+        </button>
     </div>
 </div>
 
@@ -132,33 +140,41 @@
         flex-grow: 1;
         padding: 10px;
         overflow-y: auto;
-        background-color: #2a2a2a;
+        background-color: #F4F1DE;
     }
+
     .message {
         display: inline-block;
         box-sizing: border-box;
         font-family: 'Arial', sans-serif;
+        font-size: small;
         margin-bottom: 10px;
         padding: 12px;
-        border-top: 1px solid #333;
+        border: none;
         color: #fff;
         border-radius: 15px;
         height: auto;
+        width: fit-content;
+        max-width: 70%;
     }
+    .message.audio {
+        padding: 0;
+    }
+
     .sender {
         align-self: flex-end;
-        background-color: #801414;
+        background-color: #3D405B;
     }
     .receiver {
         align-self: flex-start;
-        background-color: #06424d;
+        background-color: #E07A5F;
     }
     .input-area {
         display: flex;
         padding: 10px;
-        background-color: #333;
+        background-color: #3D405B;
         color: #ddd;
-        border: 1px solid #444;
+        /* border: 1px solid #444; */
         border-top: 1px solid #ccc;
         align-items: center;
         min-height: 50px;
@@ -167,31 +183,35 @@
         flex-grow: 1;
         margin-right: 10px;
         padding: 8px;
-        border: 1px solid #ccc;
-        background-color: #504d4d;
+        border: none;
+        background-color: #525679;
         border-radius: 4px;
-        color: #ddd;
+        color: #f4f1dee0;
         outline: none;
     }
     .input-area button {
-        background-color: #920404;
+        background-color: #81B29A;
         color: white;
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        width: 90px;
+        width: 35px;
+        height: 35px;
         padding: 0;
         flex: none;
+        margin-left: 10px;
     }
     .input-area button:hover {
-        background-color: #7a0404;
+        background-color: #eebb6a;
     }
-    .input-area button.record {
-        margin-left: 10px;
-        width: 40px;
-    }
-    .input-area input, .input-area button {
+    .input-area input{
         height: 40px; /* Fixed height for input and buttons */
         margin-bottom: 0;
     }
+    .button img {
+        padding: 3px 1px 0 0;
+        width: 50%;
+        height: 50%;
+    }
+
 </style>
