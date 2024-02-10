@@ -36,7 +36,7 @@ This is a PoC I'm working on to satisfy my curiosity about whether voice notes c
 6. Integrate speech-to-text API for transcription
 7. Implement sentiment analysis
 8. Develop color-coded emotion visualization
-9. Incorporate audio visualization library
+9. Automatically cut out long pauses between words (uhms, ahms, thinking breaks), make it optional for user in the settings
 10. Create interactive playback dashboard
 11. Implement threaded conversations feature
 12. Prototype testing
