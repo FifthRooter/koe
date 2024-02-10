@@ -27,7 +27,7 @@ I'm using Matrix protocol due to it being an off-the-shelf, reliable, pretty mat
 
 This is a PoC I'm working on to satisfy my curiosity about whether voice notes can be better integrated into the messenger app communications flow, and is not intended to be a final product of any kind.
 
-### Current game plan:
+### Current game plan/progress:
 1. ~~Set up a basic local Matrix environment (using Synapse homeserver)~~
 2. ~~Integrate Matrix client SDK w/ user authentication and session persistence~~
 3. ~~Create minimal chat interface~~
@@ -46,9 +46,6 @@ This is a PoC I'm working on to satisfy my curiosity about whether voice notes c
 16. Slowly lose hope
 17. Hope lost, queue despair
 18. Move on to the next idea
-
-### Current progress:
-![Screenshot from 2024-01-04 11-53-48](https://github.com/FifthRooter/koe/assets/22204845/ccaf1efc-3dc1-4de3-b4ee-64960d1d9130)
 
 ![Screenshot from 2024-02-09 19-44-16](https://github.com/FifthRooter/koe/assets/22204845/3eee6ca3-eede-47c3-b054-4b1ad3b81cf5)
 
